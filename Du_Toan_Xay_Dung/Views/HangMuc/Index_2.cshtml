@@ -1,0 +1,101 @@
+﻿@using Du_Toan_Xay_Dung.Models
+@using Du_Toan_Xay_Dung.Handlers
+@{
+    ViewBag.Title = "Index_2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var ListCongViec_DM = ViewData["DSDinhMuc"] as List<DinhMucViewModel>;
+    //var danhsachCt = ViewData["DSCongTrinh"] as List<CongTrinhCuaUser>;
+    var ListCongViec_User = ViewData["HangMuc_ChiTiet"] as List<CongViec_User_ViewModel>;
+    var congtrinh = ViewData["CongTrinh"] as CongTrinhViewModel;
+    var hangmuc = ViewData["HangMuc"] as HangMucViewModel;
+    var dscongtrinh = ViewData["DSCongTrinh"] as List<CongTrinhViewModel>;
+
+}
+<section class="content">
+    @if (congtrinh != null)
+    {
+        <h2>@congtrinh.TenCT</h2>
+        <br />
+        <br />
+    }
+    else
+    {
+        if (SessionHandler.User != null)
+        {
+            <select id="combb_congtrinh">
+                <option value="0">--Chọn Công Trình--</option>
+                @foreach (var item in dscongtrinh)
+                {
+                    <option value="@item.MaCT">@item.TenCT</option>
+                }
+            </select>
+            <br />
+            <br />
+
+            <script>
+                $(document).ready(function () {
+                    $('#combb_congtrinh').on('change', function () {
+                        $('#txt_congtrinh').val($(this).val());
+                    });
+                });
+            </script>
+        }
+    }
+
+    @{ Html.RenderPartial("_Menu_HangMuc");}
+    <br />
+
+    <div class="col-lg-3" style="margin-top: 20px">
+        <a class="btn btn-block btn-primary btn-lg" id="btn_themhm" href="/HangMuc/Index" target="_blank"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
+    </div>
+    <div id="container" class="container" style="margin-top:100px">
+        <div class="row" id="div_primary">
+            <div class="col-xs-12">
+                <form method="post" action="/HangMuc/FormSubmit" id="formAdd" enctype="multipart/form-data">
+
+                    @if (congtrinh != null)
+                    {
+                        <input type="hidden" value="@congtrinh.MaCT" id="txt_congtrinh" name="txt_congtrinh" />
+                    }
+                    else
+                    {
+                        <input type="hidden" value="" id="txt_congtrinh" name="txt_congtrinh" />
+                    }
+                    @if (ListCongViec_User == null && ListCongViec_DM != null)
+                    {
+                        <select class="selectpicker" name="cmbtencv[]" data-width="500px" data-live-search="true">
+                            @if (ListCongViec_DM != null)
+                            {
+                                <option value="0">--Tìm kiếm Công Việc--</option>
+                                foreach (var k in ListCongViec_DM)
+                                {
+                                    <option value="@k.MaHieuCV_DM" data-donvi="@k.DonVi">- @k.CongTac @k.RangBuoc</option>
+                                }
+                            }
+                        </select>
+                    }
+                </form>
+                <div class="box">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2" style="float:right">
+                <button type="submit" class="btn btn-block btn-primary btn-flat" id="btnSubmit">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+    </div>
+</section>
+

@@ -4,10 +4,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var ListCongViec = ViewData["DSDinhMuc"] as List<DinhMucViewModel>;
+    var ListCongViec_DM = ViewData["DSDinhMuc"] as List<DinhMucViewModel>;
     //var danhsachCt = ViewData["DSCongTrinh"] as List<CongTrinhCuaUser>;
-    var list_hangmuc_chitiet = ViewData["HangMuc_ChiTiet"] as List<HangMuc_CongViecViewModel>;
-    var tongtien_hangmuc = ViewData["TongTien_HangMuc"];
+    var ListCongViec_User = ViewData["HangMuc_ChiTiet"] as List<CongViec_User_ViewModel>;
     var congtrinh = ViewData["CongTrinh"] as CongTrinhViewModel;
     var hangmuc = ViewData["HangMuc"] as HangMucViewModel;
     var dscongtrinh = ViewData["DSCongTrinh"] as List<CongTrinhViewModel>;
@@ -38,7 +37,7 @@
             </select>
             <br />
             <br />
-        
+
             <script>
                 $(document).ready(function () {
                     $('#combb_congtrinh').on('change', function () {
@@ -70,7 +69,7 @@
                             <input type="hidden" value="" id="txt_congtrinh" name="txt_congtrinh" />
                         }
 
-                        @if (list_hangmuc_chitiet != null && ListCongViec != null)
+                        @if (ListCongViec_User !=null && ListCongViec_DM != null)
                         {
                             <div class="box-header">
                                 <h3 id="h3_hangmuc" class="box-title">@hangmuc.TenHM</h3>
@@ -104,100 +103,43 @@
                                             <td></td>
                                             <td></td>
                                         </tr>
-                                        @if (list_hangmuc_chitiet.Count != 0)
-                                        {
-                                            foreach (var item in list_hangmuc_chitiet)
-                                            {
-                                                <tr class="tr_congviec">
-                                                    <td></td>
-                                                    <td>
-                                                        <select class="selectpicker" name="cmbtencv[]" data-width="300px" data-live-search="true">
-                                                            <option value="0">Chọn Công Việc</option>
-                                                            @foreach (var k in ListCongViec)
-                                                            {
-                                                                if (item.MaHieuCV == k.MaHieuCV)
-                                                                {
-                                                                    <option value="@k.MaHieuCV" data-donvi="@k.DonVi" selected>- @k.CongTac @k.RangBuoc</option>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <option value="@k.MaHieuCV" data-donvi="@k.DonVi">- @k.CongTac @k.RangBuoc</option>
-                                                                }
-                                                            }
-                                                        </select>
-
-                                                    </td>
-                                                    <td>
-                                                        <input style="width:50px" type="text" value="@item.DonVi" name="txtdonvi[]" />
-                                                    </td>
-                                                    <td class="td_khoiluong">
-                                                        <input style="width:50px" type="text" value="@item.KhoiLuong" class="txt_khoiluong" name="txtkhoiluong[]" />
-                                                    </td>
-                                                    <td style="border-right: 1px solid #dddddd; border-left: 1px solid #dddddd">
-                                                        <input style="width:80px" type="text" value="@item.GiaVL" name="txtgiavl[]" />
-                                                    </td>
-                                                    <td style="border-right:1px solid #dddddd;">
-                                                        <input style="width: 80px" type="text" value="@item.GiaNC" name="txtgianc[]" />
-                                                    </td>
-                                                    <td style="border-right:1px solid #dddddd;">
-                                                        <input style="width: 80px" type="text" value="@item.GiaMTC" name="txtgiamtc[]" />
-                                                    </td>
-                                                    <td style="border-right:1px solid #dddddd;" class="tag_a">
-                                                        <a class="btn btn-primary btn-flat btn-xs" href="/HangMuc/ChiTiet_VL_NC_MTC/?ID=@item.MaHieuCV,@hangmuc.MaHM" target="_blank">
-                                                            <i class="fa fa-edit"></i> Detail
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="sum_thanhtien">@item.ThanhTien</span>
-                                                        <input type="hidden" value="@item.ThanhTien" name="txtthanhtien[]" />
-                                                    </td>
-                                                    <td style="border-left:1px solid #dddddd;">
-                                                        <span class="btn btn-danger btn-flat btn-xs btn_xoa_cv">
-                                                            <i class="fa fa-edit"></i>Xóa
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                        else
+                                        @foreach (var item in ListCongViec_User)
                                         {
                                             <tr class="tr_congviec">
                                                 <td></td>
                                                 <td>
                                                     <select class="selectpicker" name="cmbtencv[]" data-width="300px" data-live-search="true">
-                                                        @if (ListCongViec != null)
+                                                        <option value="@item.MaHieuCV_User" data-donvi="@item.DonVi" selected>- @item.TenCongViec</option>
+                                                        @foreach (var k in ListCongViec_DM)
                                                         {
-                                                            <option value="0">Chọn Công Việc</option>
-                                                            foreach (var item in ListCongViec)
-                                                            {
-                                                                <option value="@item.MaHieuCV" data-donvi="@item.DonVi">- @item.CongTac @item.RangBuoc</option>
-                                                            }
+                                                            <option value="@k.MaHieuCV_DM" data-donvi="@k.DonVi" selected>- @k.CongTac @k.RangBuoc</option>
                                                         }
                                                     </select>
+
                                                 </td>
                                                 <td>
-                                                    <input style="width:50px" type="text" name="txtdonvi[]" />
+                                                    <input style="width:50px" type="text" value="@item.DonVi" name="txtdonvi[]" />
                                                 </td>
                                                 <td class="td_khoiluong">
-                                                    <input style="width:50px" type="text" value="1" class="txt_khoiluong" name="txtkhoiluong[]" />
+                                                    <input style="width:50px" type="text" value="@item.KhoiLuong" class="txt_khoiluong" name="txtkhoiluong[]" />
                                                 </td>
                                                 <td style="border-right: 1px solid #dddddd; border-left: 1px solid #dddddd">
-                                                    <input style="width:80px" type="text" value="" name="txtgiavl[]" />
+                                                    <input style="width:80px" type="text" value="@item.GiaVL" name="txtgiavl[]" />
                                                 </td>
                                                 <td style="border-right:1px solid #dddddd;">
-                                                    <input style="width: 80px" type="text" value="" name="txtgianc[]" />
+                                                    <input style="width: 80px" type="text" value="@item.GiaNC" name="txtgianc[]" />
                                                 </td>
                                                 <td style="border-right:1px solid #dddddd;">
-                                                    <input style="width: 80px" type="text" value="" name="txtgiamtc[]" />
+                                                    <input style="width: 80px" type="text" value="@item.GiaMTC" name="txtgiamtc[]" />
                                                 </td>
                                                 <td style="border-right:1px solid #dddddd;" class="tag_a">
-                                                    <a class="btn btn-primary btn-flat btn-xs" title="Detail" href="" target="_blank">
+                                                    <a class="btn btn-primary btn-flat btn-xs" href="/HangMuc/ChiTiet_VL_NC_MTC/?ID=@item.MaHieuCV_User,@hangmuc.MaHM" target="_blank">
                                                         <i class="fa fa-edit"></i> Detail
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <span class="sum_thanhtien"></span>
-                                                    <input type="hidden" value="" name="txtthanhtien[]" />
+                                                    <span class="sum_thanhtien">@item.ThanhTien</span>
+                                                    <input type="hidden" value="@item.ThanhTien" name="txtthanhtien[]" />
                                                 </td>
                                                 <td style="border-left:1px solid #dddddd;">
                                                     <span class="btn btn-danger btn-flat btn-xs btn_xoa_cv">
@@ -212,11 +154,11 @@
                             </div>
                             <div style="border-top: 1px solid #dddddd; text-align:right">
                                 <span style="font-weight:bold; font-size:20px; margin-right:200px;">TỔNG:</span>
-                                <span id="tongtien" style="margin-right: 30px; font-weight: bold; font-size: 20px">@tongtien_hangmuc</span>
-                                <input type="hidden" id="txt_tongtien" name="txt_tongtien" value="@tongtien_hangmuc" />
+                                <span id="tongtien" style="margin-right: 30px; font-weight: bold; font-size: 20px">@hangmuc.Gia</span>
+                                <input type="hidden" id="txt_tongtien" name="txt_tongtien" value="@hangmuc.Gia" />
                             </div>
                         }
-                        @if (list_hangmuc_chitiet == null && ListCongViec != null)
+                        @if (ListCongViec_User ==null && ListCongViec_DM != null)
                         {
                             <div class="box-header">
                                 <h3 id="h3_hangmuc" class="box-title">Hạng Mục Mới</h3>
@@ -254,12 +196,12 @@
                                             <td></td>
                                             <td>
                                                 <select class="selectpicker" name="cmbtencv[]" data-width="300px" data-live-search="true">
-                                                    @if (ListCongViec != null)
+                                                    @if (ListCongViec_DM != null)
                                                     {
                                                         <option value="0">Chọn Công Việc</option>
-                                                        foreach (var item in ListCongViec)
+                                                        foreach (var k in ListCongViec_DM)
                                                         {
-                                                            <option value="@item.MaHieuCV" data-donvi="@item.DonVi">- @item.CongTac @item.RangBuoc</option>
+                                                            <option value="@k.MaHieuCV_DM" data-donvi="@k.DonVi">- @k.CongTac @k.RangBuoc</option>
                                                         }
                                                     }
                                                 </select>

@@ -14,6 +14,8 @@ namespace Du_Toan_Xay_Dung.Models
         {
             MaHieuCV_User = obj.MaHieuCV_User;
             MaHM = obj.MaHM;
+            MaHieuCV_DM = obj.MaHieuCV_DM;
+            TenCongViec = obj.TenCongViec;
             DonVi = obj.DonVi;
             KhoiLuong = obj.KhoiLuong;
             GiaVL = obj.GiaVL;
@@ -24,6 +26,8 @@ namespace Du_Toan_Xay_Dung.Models
 
         public string MaHieuCV_User { get; set; }
         public string MaHM { get; set; }
+        public string MaHieuCV_DM { get; set; }
+        public string TenCongViec { get; set; }
         public string DonVi { get; set; }
         public decimal ?KhoiLuong { get; set; }
         public decimal ?GiaVL { get; set; }
