@@ -262,6 +262,7 @@
     <Content Include="Content\font-awesome\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DuToan\HangMuc.js" />
+    <Content Include="Scripts\DuToan\index_2.js" />
     <Content Include="Scripts\DuToan\jquery.editable-select.js" />
     <Content Include="Scripts\DuToan\jquery.editable-select.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

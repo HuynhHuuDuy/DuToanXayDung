@@ -73,6 +73,38 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             return View();
         }
+
+
+        [HttpPost]
+        public JsonResult getAllPrice(string idDinhMuc)
+        {
+            decimal totalGiaVL = 0;
+            decimal totalGiaNC = 0;
+            decimal totalGiaMay = 0;
+
+            var giaVL = _db.ChiTiet_DinhMucs
+                .Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("V")).ToList();
+            foreach (var item in giaVL)
+            {
+                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                totalGiaVL += _temGia.Gia * item.SoLuong;
+            }
+            var giaNC = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("N")).ToList();
+            foreach (var item in giaNC)
+            {
+                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                totalGiaNC += _temGia.Gia * item.SoLuong;
+            }
+
+            var giaMay = _db.ChiTiet_DinhMucs.Where(i => i.MaHieuCV_DM.Equals(idDinhMuc) && i.MaVL_NC_MTC.Contains("M")).ToList();
+            foreach (var item in giaMay)
+            {
+                var _temGia = _db.DonGias.Where(i => i.MaVL_NC_MTC.Equals(item.MaVL_NC_MTC)).FirstOrDefault();
+                totalGiaMay += _temGia.Gia * item.SoLuong;
+            }
+            return Json(new { totalGiaVL = totalGiaVL, totalGiaNC = totalGiaNC, totalGiaMay = totalGiaMay, idDinhMuc });
+        }
+
         
     }
 }
