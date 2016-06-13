@@ -52,7 +52,7 @@
                     {
                         <li><a href="/CongTrinh/Index">Công Trình</a></li>
                     }
-                    <li><a id="btn_href_hangmuc" href="#">Hạng Mục</a></li>
+                    <li><a id="btn_href_hangmuc" href="#">Dự Toán</a></li>
                     <li><a>Photos</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Links</a></li>
@@ -80,12 +80,12 @@
                         var con_hm = confirm("Bạn vẫn chưa đăng nhập, Hệ thống sẽ không thể lưu dữ liệu của bạn, Bạn có muốn tiếp tục...!!!");
                         if (con_hm == true)
                         {
-                            $(this).attr('href', '/HangMuc/Index');
+                            $(this).attr('href', '/HangMuc/Index_2');
                         }
                     }
                     else
                     {
-                        $(this).attr('href', "/HangMuc/Index");
+                        $(this).attr('href', "/HangMuc/Index_2");
                     }
                 });
             });
@@ -118,6 +118,7 @@
     @*@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")*@
     <script src="~/Scripts/utility/app.js"></script>
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
+    @RenderSection("CSS", required: false)
 </body>
 </html>

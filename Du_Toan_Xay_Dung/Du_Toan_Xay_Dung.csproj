@@ -308,6 +308,10 @@
     <Content Include="Views\CongTrinh\UpdateCongTrinh.cshtml" />
     <Content Include="Views\CongTrinh\ChiTiet_CongTrinh.cshtml" />
     <Content Include="Views\HangMuc\Index_2.cshtml" />
+    <Content Include="Views\HangMuc\ChiTiet_VL_NC_MTC.cshtml" />
+    <Content Include="Views\HangMuc\DonGiaChiTiet.cshtml" />
+    <Content Include="Views\CongTrinh\UpdateHangMuc.cshtml" />
+    <Content Include="Views\CongTrinh\ThemHangMuc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

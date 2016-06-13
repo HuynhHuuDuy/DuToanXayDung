@@ -160,7 +160,45 @@ namespace Du_Toan_Xay_Dung.Models
 				return this.GetTable<ThanhPhanHaoPhi>();
 			}
 		}
-	}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Insert_CongTrinh")]
+		public int Insert_CongTrinh([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Email", DbType="NVarChar(200)")] string email, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TenCT", DbType="NVarChar(2000)")] string tenCT, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="HinhAnh", DbType="Text")] string hinhAnh, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MoTa", DbType="NVarChar(2000)")] string moTa, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Gia", DbType="Decimal(18,0)")] System.Nullable<decimal> gia)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), email, tenCT, hinhAnh, moTa, gia);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Insert_CongViec")]
+		public int Insert_CongViec([global::System.Data.Linq.Mapping.ParameterAttribute(Name="MaHM", DbType="NVarChar(50)")] string maHM, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MaHieuCV_DM", DbType="NVarChar(50)")] string maHieuCV_DM, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TenCongViec", DbType="NVarChar(3000)")] string tenCongViec, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DonVi", DbType="NVarChar(50)")] string donVi, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="KhoiLuong", DbType="Decimal(18,3)")] System.Nullable<decimal> khoiLuong, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GiaVL", DbType="Decimal(18,3)")] System.Nullable<decimal> giaVL, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GiaNC", DbType="Decimal(18,3)")] System.Nullable<decimal> giaNC, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="GiaMTC", DbType="Decimal(18,3)")] System.Nullable<decimal> giaMTC, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ThanhTien", DbType="Decimal(18,3)")] System.Nullable<decimal> thanhTien)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), maHM, maHieuCV_DM, tenCongViec, donVi, khoiLuong, giaVL, giaNC, giaMTC, thanhTien);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Insert_HangMuc")]
+		public int Insert_HangMuc([global::System.Data.Linq.Mapping.ParameterAttribute(Name="MaCT", DbType="NVarChar(50)")] string maCT, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="TenHM", DbType="NVarChar(2000)")] string tenHM, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MoTa", DbType="NVarChar(2000)")] string moTa, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Gia", DbType="Decimal(18,3)")] System.Nullable<decimal> gia)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), maCT, tenHM, moTa, gia);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Insert_ThanhPhanHaoPhi")]
+		public int Insert_ThanhPhanHaoPhi([global::System.Data.Linq.Mapping.ParameterAttribute(Name="MaHieuCV_User", DbType="NVarChar(50)")] string maHieuCV_User, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Ten", DbType="NVarChar(3000)")] string ten, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="DonVi", DbType="NVarChar(50)")] string donVi, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Gia", DbType="Decimal(18,3)")] System.Nullable<decimal> gia)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), maHieuCV_User, ten, donVi, gia);
+			return ((int)(result.ReturnValue));
+		}
+
+        internal void Insert_HangMuc(HangMuc hm)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Insert_CongViec(CongViec cv_user)
+        {
+            throw new NotImplementedException();
+        }
+    }
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ChiTiet_DinhMuc")]
 	public partial class ChiTiet_DinhMuc : INotifyPropertyChanging, INotifyPropertyChanged

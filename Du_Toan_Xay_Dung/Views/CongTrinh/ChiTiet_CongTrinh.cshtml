@@ -14,15 +14,15 @@
         <h1>@CongTrinh.TenCT</h1>
     }
     <ol class="breadcrumb">
-        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Quản Lý Công Trình</a></li>
-        <li class="active">Chi Tiết Công Trình</li>
+        <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
+        <li class="active">Hạng Mục</li>
     </ol>
 </section>
 
 
 <section class="content">
     <div class="col-lg-12">
-        <a class="btn btn-primary" id="btn_themhm" href="/HangMuc/Index/?ID=@CongTrinh.MaCT"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
+        <a class="btn btn-primary" id="btn_themhm" href="/CongTrinh/ThemHangMuc/?ID=@CongTrinh.MaCT"><i class="fa fa-fw fa-plus"></i>Thêm Hạng Mục</a>
     </div>
 
     <div id="container" class="container" style="margin-top:100px">
@@ -45,17 +45,17 @@
                             var MaCT_MaHM = CongTrinh.MaCT + "," + item.MaHM;
                         <tr>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>@item.TenHM</td>
+                            <td>@item.MoTa</td>
+                            <td>@item.Gia</td>
                             <td>
-                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID=@item.MaCT" target="_blank">
-                                    <i class="fa fa-edit"></i>Thêm
+                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID=@item.MaHM" target="_blank">
+                                    <i class="fa fa-edit"></i>Sửa
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index/?ID=@MaCT_MaHM" target="_blank">
-                                    <i class="fa fa-edit"></i> Chi tiết
+                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index_2/?ID=@MaCT_MaHM" target="_blank">
+                                    <i class="fa fa-edit"></i>Chi tiết
                                 </a>
                             </td>
                             <td>

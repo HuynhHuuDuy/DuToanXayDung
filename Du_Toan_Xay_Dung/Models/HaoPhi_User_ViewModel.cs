@@ -21,6 +21,6 @@ namespace Du_Toan_Xay_Dung.Models
         public string MaHieuCV_User { get; set; }
         public string Ten { get; set; }
         public string DonVi { get; set; }
-        public decimal ?Gia { get; set; }
+        public decimal Gia { get; set; }
     }
 }

@@ -3,10 +3,23 @@
     ViewBag.Title = "ChiTiet_VL_NC_MTC";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-
-    var list_vl = ViewData["List_VL"] as List<ThanhPhanHaoPhiViewModel>;
-    var list_nc = ViewData["List_NC"] as List<ThanhPhanHaoPhiViewModel>;
-    var list_mtc = ViewData["List_MTC"] as List<ThanhPhanHaoPhiViewModel>;
+    var id = ViewData["ID_MaHieuCV"];
+    var list_vl = (dynamic)null;
+    var list_nc = (dynamic)null;
+    var list_mtc = (dynamic)null;
+    if(id.ToString().Substring(0,3)!="CV_")
+    {
+        list_vl = ViewData["List_VL"] as List<HaoPhi_DM_ViewModel>;
+        list_nc = ViewData["List_NC"] as List<HaoPhi_DM_ViewModel>;
+        list_mtc = ViewData["List_MTC"] as List<HaoPhi_DM_ViewModel>;
+    }
+    else
+    {
+        list_vl = ViewData["List_VL"] as List<HaoPhi_User_ViewModel>;
+        list_nc = ViewData["List_NC"] as List<HaoPhi_User_ViewModel>;
+        list_mtc = ViewData["List_MTC"] as List<HaoPhi_User_ViewModel>;
+    }
+    
 }
 <h2>Thành Phần Hao Phí</h2>
 <section class="content">
@@ -35,7 +48,7 @@
                                     foreach (var item in list_vl)
                                     {
 
-                                        <tr data-ma="@item.Ma" data-gia="@item.Gia">
+                                        <tr>
                                             <td>@item.Ten</td>
                                             <td>@item.DonVi</td>
                                             <td><input style="width:150px" type="text" value="@item.Gia" name="txt_giavl" id="txtgiavl" /></td>
@@ -81,7 +94,7 @@
                                     foreach (var item in list_nc)
                                     {
 
-                                        <tr data-ma="@item.Ma" data-gia="@item.Gia">
+                                        <tr>
                                             <td>@item.Ten</td>
                                             <td>@item.DonVi</td>
                                             <td><input style="width:150px" type="text" value="@item.Gia" name="txt_giavl" id="txtgiavl" /></td>
@@ -127,7 +140,7 @@
                                     foreach (var item in list_mtc)
                                     {
 
-                                        <tr data-ma="@item.Ma" data-gia="@item.Gia">
+                                        <tr>
                                             <td>@item.Ten</td>
                                             <td>@item.DonVi</td>
                                             <td><input style="width:150px" type="text" value="@item.Gia" name="txt_giavl" id="txtgiavl" /></td>

@@ -11,7 +11,7 @@ namespace Du_Toan_Xay_Dung.Models
         public string Ma { get; set; }
         public string Ten { get; set; }
         public string DonVi { get; set; }
-        public decimal ?Gia { get; set; }
+        public decimal Gia { get; set; }
 
     }
 }

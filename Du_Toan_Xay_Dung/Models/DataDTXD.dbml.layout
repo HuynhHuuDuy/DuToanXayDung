@@ -56,49 +56,49 @@
         <elementListCompartment Id="85a9edf7-7750-4a37-a9b7-f792767b1358" absoluteBounds="11.765, 1.96, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 8.78929768880208); (7.25 : 8.78929768880208); (7.25 : 6.64589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 8.78929768880208); (7.25 : 8.78929768880208); (7.25 : 6.64589680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/DinhMuc/DinhMuc_ChiTiet_DinhMuc" />
       <nodes>
         <classShapeMoniker Id="f5fe0c48-c9b7-4d33-9b8f-bc9cf3f72708" />
         <classShapeMoniker Id="49b781f7-69cc-4280-9e93-52fb9d20a83a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 5.76044840494792); (6.25 : 5.76044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 5.76044840494792); (6.25 : 5.76044840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/DonGia/DonGia_ChiTiet_DinhMuc" />
       <nodes>
         <classShapeMoniker Id="8430ee8c-a1e3-40ca-af2d-bc42827d2ba7" />
         <classShapeMoniker Id="49b781f7-69cc-4280-9e93-52fb9d20a83a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 2.38544840494792); (9 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 2.38544840494792); (9 : 2.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/HangMuc/HangMuc_CongViec" />
       <nodes>
         <classShapeMoniker Id="0fb58ed7-880f-43eb-ac2e-ae454675839c" />
         <classShapeMoniker Id="bafbf978-3aa8-47f1-889d-c7a5432cecc8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 2.38544840494792); (6.25 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 2.38544840494792); (6.25 : 2.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/CongTrinh/CongTrinh_HangMuc" />
       <nodes>
         <classShapeMoniker Id="da8ecd0b-e715-4c4d-918c-fbb76516c63a" />
         <classShapeMoniker Id="0fb58ed7-880f-43eb-ac2e-ae454675839c" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 5.84699625651042); (3.5 : 5.84699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 5.84699625651042); (3.5 : 5.84699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/KhuVuc/KhuVuc_DonGia" />
       <nodes>
         <classShapeMoniker Id="55bea880-f059-4d4f-97b9-8a684ee06d19" />
         <classShapeMoniker Id="8430ee8c-a1e3-40ca-af2d-bc42827d2ba7" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.35659912109375); (3.5 : 2.35659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.35659912109375); (3.5 : 2.35659912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/Nguoi_Dung/Nguoi_Dung_CongTrinh" />
       <nodes>
         <classShapeMoniker Id="d7adb8c7-8f72-4814-b383-569910723b34" />
         <classShapeMoniker Id="da8ecd0b-e715-4c4d-918c-fbb76516c63a" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11 : 2.38544840494792); (11.75 : 2.38544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(11 : 2.38544840494792); (11.75 : 2.38544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataDTXDDataContext/CongViec/CongViec_ThanhPhanHaoPhi" />
       <nodes>
         <classShapeMoniker Id="bafbf978-3aa8-47f1-889d-c7a5432cecc8" />

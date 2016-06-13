@@ -73,6 +73,8 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
+
+
         public ActionResult UpdateCongTrinh(string ID)
         {
             if (SessionHandler.User == null)
@@ -118,6 +120,40 @@ namespace Du_Toan_Xay_Dung.Controllers
             return View();
         }
 
+        public ActionResult UpdateHangMuc(string ID)
+        {
+
+            if (ID != null)
+            {
+                ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult UpdateHangMuc(FormCollection form)
+        {
+            string ID = form["txtma"];
+            if (ID != null)
+            {
+                var hangmuc = _db.HangMucs.Single(i => i.MaHM.Equals(ID));
+                if (hangmuc != null)
+                {
+                    hangmuc.MaCT = form["txtmact"];
+                    hangmuc.TenHM = form["txttenhm"];
+                    hangmuc.MoTa = form["txtmota"];
+                    hangmuc.Gia = Convert.ToDecimal(form["txtgia"]);
+
+                    //hinh anh
+
+                    _db.SubmitChanges();
+                }
+            }
+            ViewData["HangMuc_Update"] = _db.HangMucs.Where(i => i.MaHM.Equals(ID)).Select(i => new HangMucViewModel(i)).FirstOrDefault();
+            return View();
+        }
+
+
         public ActionResult ThemCongTrinh()
         {
             return View();
@@ -150,5 +186,46 @@ namespace Du_Toan_Xay_Dung.Controllers
             }
         }
 
+        public ActionResult ThemHangMuc(string id)
+        {
+            ViewData["MaCT_ThemHangMuc"] = id;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ThemHangMuc(FormCollection form)
+        {
+            string ID = form["txtmact"];
+            if (ID != null)
+            {
+                //lay dong cuoi cung bang hangmuc
+                var mahm_last = _db.HangMucs.OrderByDescending(i => i.MaHM).Select(i => i.MaHM).FirstOrDefault();
+                var mahm_now = (dynamic)null;
+                int d_hm = 0;
+                if (mahm_last != null)
+                {
+                    mahm_now = mahm_last.ToString().Substring(2, mahm_last.ToString().Length - 2);
+                    d_hm = Convert.ToInt32(mahm_now.ToString());
+                    mahm_now = "HM" + Convert.ToString(d_hm + 1);
+                }
+                else
+                {
+                    mahm_now = "HM1";
+                }
+
+                HangMuc hm = new HangMuc();
+                hm.MaHM = mahm_now;
+                hm.MaCT = ID;
+                hm.TenHM = form["txttenhm"];
+                hm.MoTa = form["txtmota"];
+                hm.Gia = 0;
+
+                _db.HangMucs.InsertOnSubmit(hm);
+                _db.SubmitChanges();
+
+            }
+
+            return RedirectToAction("ChiTiet_CongTrinh", "CongTrinh", new { Id = ID });
+        }
     }
 }

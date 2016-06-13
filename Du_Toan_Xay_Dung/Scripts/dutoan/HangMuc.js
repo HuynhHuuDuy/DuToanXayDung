@@ -76,40 +76,6 @@ function _getDonviFromSelect() {
     $('#txtdonvi').val(_donvi);
 }
 
-$('#div_primary').on('change', 'select', function () {
-    var _idDinhMuc = $(this).val();
-    var _donvi = $(this).find('option:selected').attr('data-donvi');
-    var _tr = $(this).parent().parent().parent();
-    var _txtDonvi = _tr.find('input').eq(0 + 1);
-    var _txtKhoiLuong = _tr.find('input').eq(1 + 1);
-    var _txtGiaVatLieu = _tr.find('input').eq(2 + 1);
-    var _txtGiaNhanCong = _tr.find('input').eq(3 + 1);
-    var _txtGiaMayThiCong = _tr.find('input').eq(4 + 1);
-    var _taga = _tr.find(".tag_a").find('a');
-    var _lblThanhTien = _tr.find('.sum_thanhtien');
-    var _txtThanhTien = _tr.find('input').eq(5 + 1);
-
-    _txtDonvi.val(_donvi);
-    $.ajax({
-        type: "POST",
-        url: '/HangMuc/getAllPrice',
-        data: { idDinhMuc: _idDinhMuc },
-        cache: false,
-        dataType: "json",
-        success: function (result) {
-            _txtGiaVatLieu.val(result.totalGiaVL);
-            _txtGiaNhanCong.val(result.totalGiaNC);
-            _txtGiaMayThiCong.val(result.totalGiaMay);
-            _taga.attr('href', '/HangMuc/ChiTiet_VL_NC_MTC/?ID=' + result.idDinhMuc);
-            _lblThanhTien.html((parseFloat(result.totalGiaVL) + parseFloat(result.totalGiaNC) + parseFloat(result.totalGiaMay)).toFixed(3));
-            _txtThanhTien.val((parseFloat(result.totalGiaVL) + parseFloat(result.totalGiaNC) + parseFloat(result.totalGiaMay)).toFixed(3));
-            Total();
-        },
-        error: function (err) {
-            console.log(err.status + " - " + err.statusText);
-        }
-    });
-});
 
 
 $('#div_primary').on('change', "input[name='txtkhoiluong[]']", function () {

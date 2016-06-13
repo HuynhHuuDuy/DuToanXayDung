@@ -101,4 +101,38 @@
       <Association Name="CongViec_ThanhPhanHaoPhi" Member="CongViec" ThisKey="MaHieuCV_User" OtherKey="MaHieuCV_User" Type="CongViec" IsForeignKey="true" />
     </Type>
   </Table>
+  <Function Name="dbo.Insert_CongTrinh" Method="Insert_CongTrinh">
+    <Parameter Name="Email" Parameter="email" Type="System.String" DbType="NVarChar(200)" />
+    <Parameter Name="TenCT" Parameter="tenCT" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="HinhAnh" Parameter="hinhAnh" Type="System.String" DbType="Text" />
+    <Parameter Name="MoTa" Parameter="moTa" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Gia" Parameter="gia" Type="System.Decimal" DbType="Decimal(18,0)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Insert_CongViec" Method="Insert_CongViec">
+    <Parameter Name="MaHM" Parameter="maHM" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MaHieuCV_DM" Parameter="maHieuCV_DM" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="TenCongViec" Parameter="tenCongViec" Type="System.String" DbType="NVarChar(3000)" />
+    <Parameter Name="DonVi" Parameter="donVi" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="KhoiLuong" Parameter="khoiLuong" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Parameter Name="GiaVL" Parameter="giaVL" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Parameter Name="GiaNC" Parameter="giaNC" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Parameter Name="GiaMTC" Parameter="giaMTC" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Parameter Name="ThanhTien" Parameter="thanhTien" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Insert_HangMuc" Method="Insert_HangMuc">
+    <Parameter Name="MaCT" Parameter="maCT" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="TenHM" Parameter="tenHM" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="MoTa" Parameter="moTa" Type="System.String" DbType="NVarChar(2000)" />
+    <Parameter Name="Gia" Parameter="gia" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Insert_ThanhPhanHaoPhi" Method="Insert_ThanhPhanHaoPhi">
+    <Parameter Name="MaHieuCV_User" Parameter="maHieuCV_User" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Ten" Parameter="ten" Type="System.String" DbType="NVarChar(3000)" />
+    <Parameter Name="DonVi" Parameter="donVi" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Gia" Parameter="gia" Type="System.Decimal" DbType="Decimal(18,3)" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>
