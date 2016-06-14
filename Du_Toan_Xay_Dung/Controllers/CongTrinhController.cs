@@ -227,5 +227,26 @@ namespace Du_Toan_Xay_Dung.Controllers
 
             return RedirectToAction("ChiTiet_CongTrinh", "CongTrinh", new { Id = ID });
         }
+
+        public ActionResult ExportToExcel(string ID)
+        {
+            if(ID!=null)
+            {
+                ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(ID)).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
+
+                ViewData["CT-HangMucs"] = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => new HangMucViewModel(i)).ToList();
+                var mahangmucs = _db.HangMucs.Where(i => i.MaCT.Equals(ID)).Select(i => i.MaHM).ToList();
+
+                ViewData["HangMucs-CongViec_Users"] = _db.CongViecs.Where(i=> mahangmucs.Contains(i.MaHM)).Select(i => new CongViec_User_ViewModel(i)).ToList();
+                var macongviecs = _db.CongViecs.Where(i => mahangmucs.Contains(i.MaHM)).Select(i => i.MaHieuCV_User).ToList();
+
+                ViewData["CongViecs-HaoPhis"] = _db.ThanhPhanHaoPhis.Where(i => macongviecs.Contains(i.MaHieuCV_User)).Select(i => new HaoPhi_User_ViewModel(i)).ToList();
+
+            }
+
+
+
+            return View();
+        }
     }
 }

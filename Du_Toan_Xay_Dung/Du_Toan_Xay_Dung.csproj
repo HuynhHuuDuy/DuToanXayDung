@@ -312,6 +312,7 @@
     <Content Include="Views\HangMuc\DonGiaChiTiet.cshtml" />
     <Content Include="Views\CongTrinh\UpdateHangMuc.cshtml" />
     <Content Include="Views\CongTrinh\ThemHangMuc.cshtml" />
+    <Content Include="Views\CongTrinh\ExportToExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
