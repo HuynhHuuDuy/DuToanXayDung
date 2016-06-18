@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Du_Toan_Xay_Dung.Models;
 using Du_Toan_Xay_Dung.Handlers;
+using Du_Toan_Xay_Dung.Filter;
 
 namespace Du_Toan_Xay_Dung.Controllers
 {
@@ -14,6 +15,7 @@ namespace Du_Toan_Xay_Dung.Controllers
         public DataDTXDDataContext _db = new DataDTXDDataContext();
         //
         // GET: /TT_D_KLCongViec/
+
 
         public ActionResult Index(string ID)
         {
@@ -41,10 +43,12 @@ namespace Du_Toan_Xay_Dung.Controllers
 
 
             ViewData["DSDinhMuc"] = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
+            ViewData["DSDonGia"] = _db.DonGias.Select(i => new DonGiaViewModel(i)).ToList();
 
             return View();
         }
 
+        //[PageLogin]
         public ActionResult Index_2(string ID)
         {
             if (ID != null)
@@ -58,7 +62,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                 {
                     var Arr_ID = ID.Split(',');
                     ViewData["CongTrinh"] = _db.CongTrinhs.Where(i => i.MaCT.Equals(Arr_ID[0])).Select(i => new CongTrinhViewModel(i)).FirstOrDefault();
-                    ViewData["HangMuc_ChiTiet"] = _db.CongViecs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new CongViec_User_ViewModel(i)).ToList();
+                    ViewData["CongViec_User"] = _db.CongViecs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new CongViec_User_ViewModel(i)).ToList();
                     ViewData["HangMuc"] = _db.HangMucs.Where(i => i.MaHM.Equals(Arr_ID[1])).Select(i => new HangMucViewModel(i)).FirstOrDefault();
                 }
             }
@@ -70,10 +74,17 @@ namespace Du_Toan_Xay_Dung.Controllers
 
 
             ViewData["DSDinhMuc"] = _db.DinhMucs.Select(i => new DinhMucViewModel(i)).ToList();
+            ViewData["DSDonGia"] = _db.DonGias.Select(i => new DonGiaViewModel(i)).Take(10).ToList();
+            ViewData["KhuVucDG"] = _db.DonGias.GroupBy(i => i.MaKV).Select(g => g.First().MaKV).ToList();
 
             return View();
         }
 
+        public JsonResult GetDSDonGia(string search)
+        {
+            var list = _db.DonGias.Select(i => new DonGiaViewModel(i));
+            return Json(list);
+        }
 
         [HttpPost]
         public JsonResult getAllPrice(string idDinhMuc)
@@ -105,6 +116,44 @@ namespace Du_Toan_Xay_Dung.Controllers
             return Json(new { totalGiaVL = totalGiaVL, totalGiaNC = totalGiaNC, totalGiaMay = totalGiaMay, idDinhMuc });
         }
 
+        public ActionResult DonGiaChiTiet(string ID)
+        {
+            if (ID != null)
+            {
+                var Arr_ID = ID.Split(',');
+                ViewData["List_DinhMuc"] = _db.DinhMucs.Where(i => Arr_ID.Contains(i.MaHieuCV_DM)).Select(i => new DinhMucViewModel(i)).ToList();
+                ViewData["DonGiaVL"] = _db.ChiTiet_DinhMucs.Where(i => Arr_ID.Contains(i.MaHieuCV_DM) && i.MaVL_NC_MTC.Contains("V"))
+                                                .Select(i => new DonGiaChiTiet_DM_ViewModel(i)).ToList();
+
+                ViewData["DonGiaNC"] = (from ct in _db.ChiTiet_DinhMucs
+                                        join dg in _db.DonGias on ct.MaVL_NC_MTC equals
+                                            dg.MaVL_NC_MTC
+                                        where Arr_ID.Contains(ct.MaHieuCV_DM) && ct.MaVL_NC_MTC.Contains("N")
+                                        select new DonGiaChiTiet_DM_ViewModel()
+                                        {
+                                            MaHieuCV_DM = ct.MaHieuCV_DM,
+                                            SoLuong = ct.SoLuong,
+                                            DonViCV = ct.DonVi,
+                                            TenHP = dg.Ten,
+                                            DonViHP = dg.DonVi,
+                                            Gia = dg.Gia
+                                        }).ToList();
+                ViewData["DonGiaMTC"] = (from ct in _db.ChiTiet_DinhMucs
+                                         join dg in _db.DonGias on ct.MaVL_NC_MTC equals
+                                             dg.MaVL_NC_MTC
+                                         where Arr_ID.Contains(ct.MaHieuCV_DM) && ct.MaVL_NC_MTC.Contains("M")
+                                         select new DonGiaChiTiet_DM_ViewModel()
+                                         {
+                                             MaHieuCV_DM = ct.MaHieuCV_DM,
+                                             SoLuong = ct.SoLuong,
+                                             DonViCV = ct.DonVi,
+                                             TenHP = dg.Ten,
+                                             DonViHP = dg.DonVi,
+                                             Gia = dg.Gia
+                                         }).ToList();
+            }
+            return View();
+        }
 
 
         public ActionResult ChiTiet_VL_NC_MTC(string ID)
@@ -238,7 +287,7 @@ namespace Du_Toan_Xay_Dung.Controllers
                     int d_hp = 0;
                     if (mahp_last != null)
                     {
-                        mahp_now = mahp_last.ToString().Substring(2, mahp_last.ToString().Length - 2);
+                        mahp_now = mahp_last.ToString().Substring(4, mahp_last.ToString().Length - 4);
                         d_hp = Convert.ToInt32(mahp_now.ToString());
                     }
                     else
@@ -277,8 +326,119 @@ namespace Du_Toan_Xay_Dung.Controllers
 
                         foreach (var k in list_haophi)
                         {
-                            mahp_now = "HP" + Convert.ToString(d_hp + 1);
+                            if (k.Ma.ToString().Substring(0, 1) == "V")
+                            {
+                                mahp_now = "V_HP" + Convert.ToString(d_hp + 1);
+                            }
+                            if (k.Ma.ToString().Substring(0, 1) == "N")
+                            {
+                                mahp_now = "N_HP" + Convert.ToString(d_hp + 1);
+                            }
+                            if (k.Ma.ToString().Substring(0, 1) == "M")
+                            {
+                                mahp_now = "M_HP" + Convert.ToString(d_hp + 1);
+                            }
+                            ThanhPhanHaoPhi hp = new ThanhPhanHaoPhi();
+                            hp.MaHP = mahp_now;
+                            hp.MaHieuCV_User = macv_now;
+                            hp.Ten = k.Ten;
+                            hp.DonVi = k.DonVi;
+                            hp.Gia = k.Gia;
 
+                            d_hp = d_hp + 1;
+
+                            _db.ThanhPhanHaoPhis.InsertOnSubmit(hp);
+                        }
+
+                        d_cv = d_cv + 1;
+                        _db.CongViecs.InsertOnSubmit(cv_user);
+                    }
+                }
+                else
+                {
+                    //delete cong viec trong hang muc
+                    var congviecs = _db.CongViecs.Where(i => i.MaHM.Equals(txtmahangmuc));
+                    _db.CongViecs.DeleteAllOnSubmit(congviecs);
+
+                    var macongviecs = _db.CongViecs.Where(i => i.MaHM.Equals(txtmahangmuc)).Select(i => i.MaHieuCV_User).ToList();
+                    var haophis = _db.ThanhPhanHaoPhis.Where(i => macongviecs.Contains(i.MaHieuCV_User));
+                    _db.ThanhPhanHaoPhis.DeleteAllOnSubmit(haophis);
+
+                    _db.SubmitChanges();
+
+
+                    //lay dong cuoi cung bang congviec
+                    var macv_last = _db.CongViecs.OrderByDescending(i => i.MaHieuCV_User).Select(i => i.MaHieuCV_User).FirstOrDefault();
+                    var macv_now = (dynamic)null;
+                    int d_cv = 0;
+
+                    if (macv_last != null)
+                    {
+                        macv_now = macv_last.ToString().Substring(3, macv_last.ToString().Length - 3);
+                        d_cv = Convert.ToInt32(macv_now.ToString());
+                    }
+                    else
+                    {
+                        d_cv = 0;
+                    }
+
+                    //lay dong cuoi cung bang thanhphanhaophi
+                    var mahp_last = _db.ThanhPhanHaoPhis.OrderByDescending(o => o.MaHP).Select(o => o.MaHP).FirstOrDefault();
+                    var mahp_now = (dynamic)null;
+                    int d_hp = 0;
+                    if (mahp_last != null)
+                    {
+                        mahp_now = mahp_last.ToString().Substring(4, mahp_last.ToString().Length - 4);
+                        d_hp = Convert.ToInt32(mahp_now.ToString());
+                    }
+                    else
+                    {
+                        d_hp = 0;
+                    }
+
+                    for (int i = 0; i < txtmahieucv_dmArr.Length; i++)
+                    {
+                        macv_now = "CV_" + Convert.ToString(d_cv + 1);
+
+                        CongViec cv_user = new CongViec();
+                        cv_user.MaHM = txtmahangmuc;
+                        cv_user.MaHieuCV_User = macv_now;
+                        cv_user.MaHieuCV_DM = txtmahieucv_dmArr[i];
+                        cv_user.TenCongViec = txttencvArr[i];
+                        cv_user.DonVi = txtdonviArr[i];
+                        cv_user.KhoiLuong = Convert.ToDecimal(txtkhoiluongArr[i]);
+                        cv_user.GiaVL = Convert.ToDecimal(txtgiavlArr[i]);
+                        cv_user.GiaNC = Convert.ToDecimal(txtgiancArr[i]);
+                        cv_user.GiaMTC = Convert.ToDecimal(txtgiamtcArr[i]);
+                        cv_user.ThanhTien = Convert.ToDecimal(txtthanhtiencArr[i]);
+
+                        //insert thanh phan hao phi
+                        var list_haophi = (from ct in _db.ChiTiet_DinhMucs
+                                           join dg in _db.DonGias on ct.MaVL_NC_MTC equals
+                                               dg.MaVL_NC_MTC
+                                           where ct.MaHieuCV_DM.Equals(cv_user.MaHieuCV_DM)
+                                           select new HaoPhi_DM_ViewModel()
+                                           {
+                                               Ma = ct.MaVL_NC_MTC,
+                                               Ten = dg.Ten,
+                                               DonVi = dg.DonVi,
+                                               Gia = dg.Gia * ct.SoLuong
+                                           }).ToList();
+
+                        foreach (var k in list_haophi)
+                        {
+                            if (k.Ma.ToString().Substring(0, 1) == "V")
+                            {
+                                mahp_now = "V_HP" + Convert.ToString(d_hp + 1);
+                            }
+                            if (k.Ma.ToString().Substring(0, 1) == "N")
+                            {
+                                mahp_now = "N_HP" + Convert.ToString(d_hp + 1);
+                            }
+                            if (k.Ma.ToString().Substring(0, 1) == "M")
+                            {
+                                mahp_now = "M_HP" + Convert.ToString(d_hp + 1);
+                            }
                             ThanhPhanHaoPhi hp = new ThanhPhanHaoPhi();
                             hp.MaHP = mahp_now;
                             hp.MaHieuCV_User = macv_now;

@@ -1,4 +1,52 @@
-﻿$(document).ready(function () {
+﻿"use strict"
+
+$(document).ready(function () {
+    $('#cmbtencv').selectpicker({
+        size: 10,
+        liveSearch: true,
+        width: "500px"
+    });
+
+    $('#cbb_haophis').selectpicker({
+        liveSearch: true,
+        width: "538px"
+    });
+    $(document).on('click', '#myDropdown .dropdown-menu', function (e) {
+        e.stopPropagation();
+    });
+    var listNew = getcbbhaophis().map(function (item) {
+        item.TenUnicode = remove_unicode(item.Ten);
+        return item;
+    });
+    var ulShow = $('#cbb-haophis_show');
+    for (var i = 0; i < 100; i++) {
+        var li = $('<li class="col-lg-12"></li>');
+        li.attr('data-value', listNew[i].MaVL_NC_MTC);
+        li.attr('data-donvi', listNew[i].DonVi);
+        li.attr('data-gia', listNew[i].Gia);
+        li.text(listNew[i].Ten);
+        ulShow.append(li);
+    }
+
+    $('#search-cbb-haophis').on('input', function (e) {
+        var search = $(this).val();
+        var resultSearch = SearchText(listNew, 'TenUnicode', search);
+
+        var ulShowS = $('#cbb-haophis_show');
+        ulShowS.html('');
+        for (var j = 0; j < resultSearch.length; j++) {
+            var liS = $('<li class="col-lg-12"></li>');
+            liS.attr('data-value', resultSearch[j].MaVL_NC_MTC);
+            liS.attr('data-donvi', resultSearch[j].DonVi);
+            liS.attr('data-gia', resultSearch[j].Gia);
+            liS.text(resultSearch[j].Ten);
+            ulShowS.append(liS);
+            liS.bind("click");
+        }
+    });
+
+
+
     $('#div_primary').on('click', '.btn_xoa_cv', function () {
         var con_cv = confirm("Bạn có thật sự muốn xóa công việc này...!!!");
         if (con_cv == true) {
@@ -11,10 +59,6 @@
             $(this).closest('tr').remove();
         }
     });
-});
-
-
-$(document).ready(function () {
     $("#btn_edit_ten_hangmuc").click(function () {
         var s = prompt("Nhập tên Hạng Mục mới", "");
         $('#txt_ten_hangmuc').val(s);
@@ -47,14 +91,15 @@ $('#div_primary').on('change', 'select', function () {
             _txtGiaMayThiCong = result.totalGiaMay;
             _lblThanhTien = (parseFloat(result.totalGiaVL) + parseFloat(result.totalGiaNC) + parseFloat(result.totalGiaMay)).toFixed(3);
             _txtThanhTien = (parseFloat(result.totalGiaVL) + parseFloat(result.totalGiaNC) + parseFloat(result.totalGiaMay)).toFixed(3);
-            
+
 
             setTimeout(function () {
                 var _trNew = '<tr class="tr_primary">' +
         '<td></td>' +
-        '<input type="hidden" value="'+ _idDinhMuc +'" name="txtmahieucv_dm[]" />' +
-        '<td class="td_tencv">' + _tencv + '</td>' +
-        '<input type="hidden" value="'+ _tencv +'" name="txttencv[]" />' +
+        '<td class="td_tencv">' + _tencv +
+        '<input type="hidden" value="' + _idDinhMuc + '" name="txtmahieucv_dm[]" />' +
+        '<input type="hidden" value="' + _tencv + '" name="txttencv[]" />' +
+        '</td>' +
         '<td>' +
         '<input style="width:50px" type="text" value="' + _donvi + '" name="txtdonvi[]" />' +
         '</td>' +
@@ -182,4 +227,78 @@ function Total() {
 
 $('#btnSubmit').click(function () {
     $('#formAdd').submit();
+});
+
+function getcbbhaophis() {
+    var data;
+    $.ajax({
+        type: "POST",
+        url: '/HangMuc/GetDSDonGia',
+        data: {},
+        cache: false,
+        dataType: "json",
+        async: false,
+        success: function (result) {
+            data = result;
+        }
+    });
+    return data;
+}
+
+function remove_unicode(str) {
+    str = str.toLowerCase();
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    return str;
+}
+
+function SearchText(list, field, keyword) {
+    var result = [];
+    for (var s = 0; s < list.length; s++) {
+        if (list[s][field].toLowerCase().indexOf(keyword) != -1) {
+            result.push(list[s]);
+        }
+    }
+    return result;
+}
+
+function SelectValue(input) {
+    var ten = $(input).attr('data-ten');
+    var donvi = $(input).attr('data-donvi');
+    var gia = $(input).attr('data-gia');
+    var mahp_tamtinh = $(input).val();
+
+    /*
+    if (mahp_tamtinh.substring(0, 1) == "V")
+        giavl = parseFloat(giavl) + parseFloat(gia);
+    if (mahp_tamtinh.substring(0, 1) == "N")
+        gianc = parseFloat(gianc) + parseFloat(gia);
+    if (mahp_tamtinh.substring(0, 1) == "M")
+        giamtc = parseFloat(giamtc) + parseFloat(gia);
+    */
+    var _trnew_tamtinh = '<tr class="HaoPhi_TamTinh">' +
+        '<td>' + mahp_tamtinh + '</td>' +
+        '<td>' + ten + '</td>' +
+        '<td>' + donvi + '</td>' +
+        '<td>' + gia + '</td>' +
+        '<td><span class="btn btn-danger btn-flat btn-xs btnxoa_haophitt"><i class="fa fa-edit"></i>Xóa</span></td>' +
+        '</tr>';
+    $('#table_tamtinh').find('tbody').append(_trnew_tamtinh);
+}
+
+$('body').on('click', '#cbb-haophis_show li', function () {
+    var liSelect = $(this);
+    $('#cbb_haophis_1').html('<span class="pull-left">-- ' + liSelect.html() + '</span><span class="caret pull-right"></span>');
+    var inputHidden = $('#select-cbb-haophis');
+    inputHidden.val(liSelect.attr('data-value'));
+    inputHidden.attr('data-donvi', liSelect.attr('data-donvi'));
+    inputHidden.attr('data-gia', liSelect.attr('data-gia'));
+    inputHidden.attr('data-ten', liSelect.html());
+    $('#myDropdown').removeClass('open');
+    SelectValue(inputHidden);
 });

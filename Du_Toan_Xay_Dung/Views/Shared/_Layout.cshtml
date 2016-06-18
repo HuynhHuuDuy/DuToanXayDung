@@ -15,17 +15,12 @@
     <link rel="stylesheet" href="~/Content/jquery-ui.css" />
     @*<link href="~/Content/bootstrap-select.css" rel="stylesheet" />*@
     <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
-    
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/respond.js"></script>
     <script src="~/Scripts/respond.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
-    
-    
+
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap-select.js"></script>
 </head>
@@ -38,7 +33,7 @@
         </div>
         <div id="menu-wrapper">
             <div id="menu" class="container">
-                @if(SessionHandler.User !=null)
+                @if (SessionHandler.User != null)
                 {
                     <input type="hidden" id="txt_user" value="@SessionHandler.User.Email" />
                 }
@@ -48,11 +43,11 @@
                 }
                 <ul>
                     <li><a href="/Home/Index">Trang Chủ</a></li>
-                    @if(SessionHandler.User!=null)
+                    @if (SessionHandler.User != null)
                     {
                         <li><a href="/CongTrinh/Index">Công Trình</a></li>
                     }
-                    <li><a id="btn_href_hangmuc" href="#">Dự Toán</a></li>
+                    <li><a id="btn_href_dutoan" href="#">Dự Toán</a></li>
                     <li><a>Photos</a></li>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Links</a></li>
@@ -65,31 +60,28 @@
                     {
                         <li><a href="/Account/Logout">Đăng Xuất</a></li>
                     }
-                    
+
                 </ul>
             </div>
         </div>
         <!-- script link hang muc -->
         <script>
-            
+
             $(document).ready(function () {
-                $('#btn_href_hangmuc').click(function () {
+                $('#btn_href_dutoan').click(function () {
                     var s = $('#txt_user').val();
-                    if(s=='')
-                    {
+                    if (s == '') {
                         var con_hm = confirm("Bạn vẫn chưa đăng nhập, Hệ thống sẽ không thể lưu dữ liệu của bạn, Bạn có muốn tiếp tục...!!!");
-                        if (con_hm == true)
-                        {
+                        if (con_hm == true) {
                             $(this).attr('href', '/HangMuc/Index_2');
                         }
                     }
-                    else
-                    {
+                    else {
                         $(this).attr('href', "/HangMuc/Index_2");
                     }
                 });
             });
-            
+
         </script>
         <!-- end #page -->
         <div class="container body-content">
@@ -116,7 +108,7 @@
     <!-- end #footer -->
     <!-- day la js cua MVC no nam trong bundles -->
     @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+        @Scripts.Render("~/bundles/bootstrap")*@
     <script src="~/Scripts/utility/app.js"></script>
     @RenderSection("Scripts", required: false)
     @RenderSection("CSS", required: false)

@@ -2,11 +2,10 @@
 @{
     ViewBag.Title = "DonGiaChiTiet";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
     var List_DM = ViewData["List_DinhMuc"] as List<DinhMucViewModel>;
-    var List_DM_DG_VL = ViewData["List_ChiTietDM_DG_VL"] as List<ChiTiet_DM_DGViewModel>;
-    var List_DM_DG_NC = ViewData["List_ChiTietDM_DG_NC"] as List<ChiTiet_DM_DGViewModel>;
-    var List_DM_DG_MTC = ViewData["List_ChiTietDM_DG_MTC"] as List<ChiTiet_DM_DGViewModel>;
+    var List_DM_DG_VL = ViewData["DonGiaVL"] as List<DonGiaChiTiet_DM_ViewModel>;
+    var List_DM_DG_NC = ViewData["DonGiaNC"] as List<DonGiaChiTiet_DM_ViewModel>;
+    var List_DM_DG_MTC = ViewData["DonGiaMTC"] as List<DonGiaChiTiet_DM_ViewModel>;
 }
 <section class="content">
     @{ Html.RenderPartial("_Menu_HangMuc"); }
@@ -15,7 +14,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Responsive Hover Table</h3>
+                        <h3 class="box-title">Đơn Giá Theo Định Mức</h3>
                         <div class="box-tools">
                             <div class="input-group" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
@@ -29,7 +28,7 @@
                         <table class="table table-hover">
                             <tbody>
                                 <tr>
-                                    <th width ="30px">STT</th>
+                                    <th width="30px">STT</th>
                                     <th width="300px">Tên Công Tác</th>
                                     <th>Đơn Vị</th>
                                     <th>Định Mức</th>
@@ -51,7 +50,7 @@
                                         decimal? sum_VL = 0;
                                         foreach (var k in List_DM_DG_VL)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 sum_VL = sum_VL + k.Gia;
                                             }
@@ -66,13 +65,13 @@
                                         </tr>
                                         foreach (var k in List_DM_DG_VL)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 var tt = k.Gia * k.SoLuong;
                                                 <tr>
                                                     <td></td>
-                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenCT</td>
-                                                    <td>@k.DonViCT</td>
+                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenHP</td>
+                                                    <td>@k.DonViHP</td>
                                                     <td>@k.SoLuong</td>
                                                     <td>@k.Gia</td>
                                                     <td>@tt</td>
@@ -82,7 +81,7 @@
                                         decimal? sum_NC = 0;
                                         foreach (var k in List_DM_DG_NC)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 sum_NC = sum_NC + k.Gia;
                                             }
@@ -97,13 +96,13 @@
                                         </tr>
                                         foreach (var k in List_DM_DG_NC)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 var tt = k.Gia * k.SoLuong;
                                                 <tr>
                                                     <td></td>
-                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenCT</td>
-                                                    <td>@k.DonViCT</td>
+                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenHP</td>
+                                                    <td>@k.DonViHP</td>
                                                     <td>@k.SoLuong</td>
                                                     <td>@k.Gia</td>
                                                     <td>@tt</td>
@@ -113,7 +112,7 @@
                                         decimal? sum_MTC = 0;
                                         foreach (var k in List_DM_DG_MTC)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 sum_MTC = sum_MTC + k.Gia;
                                             }
@@ -128,13 +127,13 @@
                                         </tr>
                                         foreach (var k in List_DM_DG_MTC)
                                         {
-                                            if (item.MaHieuCV == k.MaHieuCV)
+                                            if (item.MaHieuCV_DM == k.MaHieuCV_DM)
                                             {
                                                 var tt = k.Gia * k.SoLuong;
                                                 <tr>
                                                     <td></td>
-                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenCT</td>
-                                                    <td>@k.DonViCT</td>
+                                                    <td>&nbsp&nbsp&nbsp&nbsp @k.TenHP</td>
+                                                    <td>@k.DonViHP</td>
                                                     <td>@k.SoLuong</td>
                                                     <td>@k.Gia</td>
                                                     <td>@tt</td>

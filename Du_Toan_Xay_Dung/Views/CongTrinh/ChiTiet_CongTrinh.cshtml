@@ -6,12 +6,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $('#btn_href_dutoan').click(function () {
+                var s = $('#txtmact').val();
+                $(this).attr('href', '/HangMuc/Index_2/?ID=' + s);
+            });
+        });
+
+    </script>
+}
 
 
 <section class="content-header">
     @if (CongTrinh.MaCT != null)
     {
         <h1>@CongTrinh.TenCT</h1>
+        <input type="hidden" name="txtmact" id="txtmact" value="@CongTrinh.MaCT" />
     }
     <ol class="breadcrumb">
         <li><a href="/CongTrinh/Index"><i class="fa fa-dashboard"></i>Công Trình</a></li>
@@ -43,28 +56,28 @@
                         @foreach (var item in ChiTiet_CongTrinh)
                         {
                             var MaCT_MaHM = CongTrinh.MaCT + "," + item.MaHM;
-                        <tr>
-                            <td></td>
-                            <td>@item.TenHM</td>
-                            <td>@item.MoTa</td>
-                            <td>@item.Gia</td>
-                            <td>
-                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID=@item.MaHM" target="_blank">
-                                    <i class="fa fa-edit"></i>Sửa
-                                </a>
-                            </td>
-                            <td>
-                                <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index_2/?ID=@MaCT_MaHM" target="_blank">
-                                    <i class="fa fa-edit"></i>Chi tiết
-                                </a>
-                            </td>
-                            <td>
-                                <input type="hidden" value="@item.MaHM" />
-                                <button class="btn btn-danger btn-flat btn-xs">
-                                    <i class="fa fa-edit"></i> Xóa
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td></td>
+                                <td>@item.TenHM</td>
+                                <td>@item.MoTa</td>
+                                <td>@item.Gia</td>
+                                <td>
+                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/CongTrinh/UpdateHangMuc/?ID=@item.MaHM" target="_blank">
+                                        <i class="fa fa-edit"></i>Sửa
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary btn-flat btn-xs" title="Hạng Mục" href="/HangMuc/Index_2/?ID=@MaCT_MaHM" target="_blank">
+                                        <i class="fa fa-edit"></i>Dự Toán
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="hidden" value="@item.MaHM" />
+                                    <button class="btn btn-danger btn-flat btn-xs">
+                                        <i class="fa fa-edit"></i> Xóa
+                                    </button>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>

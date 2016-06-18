@@ -92,32 +92,26 @@ namespace Du_Toan_Xay_Dung.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCongTrinh(FormCollection form)
+        public JsonResult Post_UpdateCongTrinh(CongTrinhViewModel model)
         {
             if (SessionHandler.User == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
+                return Json("login");
             else
             {
-                string ID = form["Ma"];
-                if (ID != null)
+                try
                 {
-                    var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(ID));
-                    if (congtrinh != null)
-                    {
-                        congtrinh.TenCT = form["TenCT"];
-                        congtrinh.MoTa = form["MoTa"];
-                        congtrinh.Gia = Convert.ToDecimal(form["Gia"]);
-                        
-                        //hinh anh
-
-                        _db.SubmitChanges();
-                        return RedirectToAction("Index", "CongTrinh");
-                    }
+                    var congtrinh = _db.CongTrinhs.Single(i => i.MaCT.Equals(model.MaCT));
+                    congtrinh.TenCT = model.TenCT;
+                    congtrinh.MoTa = model.MoTa;
+                    congtrinh.Gia = model.Gia;
+                    _db.SubmitChanges();
+                    return Json("ok");
+                }
+                catch (Exception e)
+                {
+                    return Json("error");
                 }
             }
-            return View();
         }
 
         public ActionResult UpdateHangMuc(string ID)
